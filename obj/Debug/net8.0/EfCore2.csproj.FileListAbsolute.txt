@@ -126,3 +126,4 @@ C:\Users\ihmf_\Desktop\EfCore2\obj\Debug\net8.0\refint\EfCore2.dll
 C:\Users\ihmf_\Desktop\EfCore2\obj\Debug\net8.0\EfCore2.pdb
 C:\Users\ihmf_\Desktop\EfCore2\obj\Debug\net8.0\EfCore2.genruntimeconfig.cache
 C:\Users\ihmf_\Desktop\EfCore2\obj\Debug\net8.0\ref\EfCore2.dll
+C:\Users\ihmf_\Desktop\EfCore2\obj\Debug\net8.0\EfCore2.sourcelink.json

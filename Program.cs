@@ -8,6 +8,7 @@ public class ShopContext: DbContext
 {
     public DbSet<User> Users {get;set;}
     public DbSet<Address> Addresses {get;set;}
+    public DbSet<Customer> Customers {get;set;}
 
     public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); }); // LINQ to SQL at Console
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -18,7 +19,7 @@ public class ShopContext: DbContext
     }
 }
 
-// Adding Entity Classes (One To Many)
+// Adding Entity Classes
 
 public class User
 {
@@ -28,6 +29,7 @@ public class User
     [Required]
     public string Email { get; set; }
     public List<Address> Addresses { get; set; } // Navigation Property
+    public Customer Customer { get; set; } // Navigation Property
 }
 
 public class Address
@@ -41,7 +43,22 @@ public class Address
     public int UserId { get; set; } // Foreign Key
 }
 
+public class Customer
+{
+    public int Id { get; set; } // Primary Key
+    public string IdentityNumber { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public User User { get; set; } // Navigation Property
+    public int UserId { get; set; } // Unique Key
+}
 
+public class Supplier
+{
+    public int Id { get; set; } // Primary Key
+    public string Name { get; set; }
+    public string TaxNumber { get; set; }
+}
 
 class Program
 {
@@ -79,8 +96,42 @@ class Program
         }
     }
 
+    static void InsertCustomer()
+    {
+        using (var db = new ShopContext())
+        {
+            var customer = new Customer()
+            {
+                IdentityNumber="6542314",
+                FirstName="Namecustomer4",
+                LastName="Lastnamecustomer4",
+                User = db.Users.FirstOrDefault(i=>i.Id==4)
+            };
+
+            db.Customers.Add(customer);
+            db.SaveChanges();
+        }
+
+        // using (var db = new ShopContext())
+        // {
+        //     var user = new User()
+        //     {
+        //         Username = "user",
+        //         Email="user@gmail.com",
+        //         Customer = new Customer(){
+        //             FirstName = "Userdeneme",
+        //             LastName = "Userdeneme",
+        //             IdentityNumber="1234567"
+        //         }
+        //     };
+        //     db.Users.Add(user);
+        //     db.SaveChanges();
+        // }
+
+    }
+    
     static void Main()
     {
-        InsertAddress();
+        InsertUsers();
     }
 }
